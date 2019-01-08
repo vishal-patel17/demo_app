@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = false;
 
   List _postNames = new List();
+  List _finalPosts = new List();
 
   final String apiUrl = "https://haasyayoga.com/wp-json/wp/v2/";
   List posts;
@@ -54,13 +55,23 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       var resBody = json.decode(res.body);
       posts = resBody;
+
       for (int i = 0; i < posts.length; ++i) {
         _postNames.add(posts[i]["title"]["rendered"]);
       }
+
+      for (int i = 0; i < posts.length; ++i) {
+        if (posts[i]['categories'][0] == 6) {
+          _finalPosts = posts;
+        }
+      }
+
+      //print(_finalPosts);
+
       this._isLoading = false;
     });
 
-    print(this._postNames);
+    //print(posts);
 
     return "Success!";
   }
@@ -97,59 +108,66 @@ class _HomePageState extends State<HomePage> {
             : ListView.builder(
                 itemCount: posts == null ? 0 : posts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: <Widget>[
-                      Card(
-                        child: Column(
+                  return posts[index]['categories'][0] == 6
+                      ? Column(
                           children: <Widget>[
-                            new CachedNetworkImage(
-                              imageUrl: posts[index]["featured_media"] == 0
-                                  ? '' // post doesn't have image
-                                  : posts[index]["_embedded"]
-                                      ["wp:featuredmedia"][0]["source_url"],
-                              placeholder: new CircularProgressIndicator(),
-                              errorWidget: new Icon(Icons.error),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: ListTile(
-                                title: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                                  child: Text(posts[index]["title"]["rendered"],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0)),
-                                ),
-                                subtitle: Text(
-                                  posts[index]['excerpt']['rendered']
-                                      .replaceAll(RegExp(r'<[^>]*>'), ''),
-                                  style: TextStyle(),
-                                ),
-                              ),
-                            ),
-                            new ButtonTheme.bar(
-                              child: new ButtonBar(
+                            Card(
+                              child: Column(
                                 children: <Widget>[
-                                  new FlatButton(
-                                    child: const Text('READ MORE'),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                          builder: (context) =>
-                                              new Posts(post: posts[index]),
+                                  new CachedNetworkImage(
+                                    imageUrl:
+                                        posts[index]["featured_media"] == 0
+                                            ? '' // post doesn't have image
+                                            : posts[index]["_embedded"]
+                                                    ["wp:featuredmedia"][0]
+                                                ["source_url"],
+                                    placeholder:
+                                        new CircularProgressIndicator(),
+                                    errorWidget: new Icon(Icons.error),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: ListTile(
+                                      title: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.0),
+                                        child: Text(
+                                            posts[index]["title"]["rendered"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0)),
+                                      ),
+                                      subtitle: Text(
+                                        posts[index]['excerpt']['rendered']
+                                            .replaceAll(RegExp(r'<[^>]*>'), ''),
+                                        style: TextStyle(),
+                                      ),
+                                    ),
+                                  ),
+                                  new ButtonTheme.bar(
+                                    child: new ButtonBar(
+                                      children: <Widget>[
+                                        new FlatButton(
+                                          child: const Text('READ MORE'),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                builder: (context) => new Posts(
+                                                    post: posts[index]),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      );
-                                    },
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
+                            )
                           ],
-                        ),
-                      )
-                    ],
-                  );
+                        )
+                      : null;
                 },
               ),
       ),
