@@ -85,6 +85,7 @@ class _MyAppState extends State<MyApp> {
                         child: Column(
                           children: <Widget>[
                             FadeInImage.memoryNetwork(
+                              fit: BoxFit.scaleDown,
                               placeholder: kTransparentImage,
                               image: posts[index]["featured_media"] == 0
                                   ? '' // post doesn't have image
@@ -95,13 +96,13 @@ class _MyAppState extends State<MyApp> {
                               padding: EdgeInsets.all(10.0),
                               child: ListTile(
                                 title: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.0),
-                                    child: Text(posts[index]["title"]
-                                            ["rendered"]
-                                        .replaceAll(RegExp(r'<[^>]*>'), ''))),
-                                subtitle: HtmlView(
-                                    data: posts[index]['excerpt']['rendered']),
+                                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                                  child:
+                                      Text(posts[index]["title"]["rendered"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                                ),
+                                subtitle: Text(posts[index]['excerpt']
+                                        ['rendered']
+                                    .replaceAll(RegExp(r'<[^>]*>'), ''), style: TextStyle(),),
                               ),
                             ),
                             new ButtonTheme.bar(

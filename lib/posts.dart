@@ -22,7 +22,18 @@ class Posts extends StatelessWidget {
                   ? ''
                   : post["_embedded"]["wp:featuredmedia"][0]["source_url"],
             ),
-            HtmlView(data: post['content']['rendered'])
+            HtmlView(data: post['content']['rendered']),
+            SizedBox(height: 8.0),
+            ButtonTheme.bar(
+              child: new ButtonBar(
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.favorite_border), onPressed: () {}),
+                  IconButton(icon: Icon(Icons.comment), onPressed: () {}),
+                  IconButton(icon: Icon(Icons.share), onPressed: () {}),
+                ],
+              ),
+            ),
           ],
         ),
       ),
