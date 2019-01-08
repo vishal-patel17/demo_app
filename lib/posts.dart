@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Posts extends StatefulWidget {
   var post;
@@ -20,12 +21,13 @@ class _PostsState extends State<Posts> {
         padding: EdgeInsets.all(16.0),
         child: new ListView(
           children: <Widget>[
-            new FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image: widget.post["featured_media"] == 0
+            new CachedNetworkImage(
+              imageUrl: widget.post["featured_media"] == 0
                   ? ''
                   : widget.post["_embedded"]["wp:featuredmedia"][0]
                       ["source_url"],
+              placeholder: new CircularProgressIndicator(),
+              errorWidget: new Icon(Icons.error),
             ),
             HtmlView(data: widget.post['content']['rendered']),
             SizedBox(height: 8.0),

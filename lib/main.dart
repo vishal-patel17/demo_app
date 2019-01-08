@@ -3,8 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:transparent_image/transparent_image.dart';
-import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'posts.dart';
 
@@ -103,13 +102,13 @@ class _HomePageState extends State<HomePage> {
                       Card(
                         child: Column(
                           children: <Widget>[
-                            FadeInImage.memoryNetwork(
-                              fit: BoxFit.scaleDown,
-                              placeholder: kTransparentImage,
-                              image: posts[index]["featured_media"] == 0
+                            new CachedNetworkImage(
+                              imageUrl: posts[index]["featured_media"] == 0
                                   ? '' // post doesn't have image
                                   : posts[index]["_embedded"]
                                       ["wp:featuredmedia"][0]["source_url"],
+                              placeholder: new CircularProgressIndicator(),
+                              errorWidget: new Icon(Icons.error),
                             ),
                             Padding(
                               padding: EdgeInsets.all(10.0),
