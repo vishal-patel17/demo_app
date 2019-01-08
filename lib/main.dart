@@ -10,11 +10,26 @@ import 'posts.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Demo App',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new HomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
@@ -22,6 +37,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   bool _isLoading = false;
+
+  List _postNames = new List();
 
   final String apiUrl = "https://haasyayoga.com/wp-json/wp/v2/";
   List posts;
@@ -38,10 +55,13 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       var resBody = json.decode(res.body);
       posts = resBody;
+      for (int i = 0; i < posts.length; ++i) {
+        _postNames.add(posts[i]["title"]["rendered"]);
+      }
       this._isLoading = false;
     });
 
-    //print(this.posts);
+    print(this._postNames);
 
     return "Success!";
   }
@@ -70,6 +90,7 @@ class _MyAppState extends State<MyApp> {
             )
           ],
         ),
+        drawer: Drawer(),
         body: _isLoading
             ? Center(
                 child: CircularProgressIndicator(),
