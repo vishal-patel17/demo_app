@@ -66,9 +66,7 @@ class _MyAppState extends State<MyApp> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
-              },
+              onPressed: () {},
             )
           ],
         ),
@@ -97,12 +95,16 @@ class _MyAppState extends State<MyApp> {
                               child: ListTile(
                                 title: Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10.0),
-                                  child:
-                                      Text(posts[index]["title"]["rendered"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                                  child: Text(posts[index]["title"]["rendered"],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0)),
                                 ),
-                                subtitle: Text(posts[index]['excerpt']
-                                        ['rendered']
-                                    .replaceAll(RegExp(r'<[^>]*>'), ''), style: TextStyle(),),
+                                subtitle: Text(
+                                  posts[index]['excerpt']['rendered']
+                                      .replaceAll(RegExp(r'<[^>]*>'), ''),
+                                  style: TextStyle(),
+                                ),
                               ),
                             ),
                             new ButtonTheme.bar(
@@ -132,37 +134,5 @@ class _MyAppState extends State<MyApp> {
               ),
       ),
     );
-  }
-}
-
-class DataSearch extends SearchDelegate<String> {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {},
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.arrow_menu, progress: transitionAnimation),
-        onPressed: () {});
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return null;
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    return null;
   }
 }
