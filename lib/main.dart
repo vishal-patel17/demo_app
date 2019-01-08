@@ -3,6 +3,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:transparent_image/transparent_image.dart';
+
+import 'posts.dart';
 
 void main() => runApp(MyApp());
 
@@ -56,47 +59,72 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blueAccent,
-            title: Text('Demo_app'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  showSearch(context: context, delegate: DataSearch());
-                },
+        appBar: AppBar(
+          backgroundColor: Colors.blueAccent,
+          title: Text('Demo_app'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              },
+            )
+          ],
+        ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
               )
-            ],
-          ),
-          body: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: posts == null ? 0 : posts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      child: Center(
+            : ListView.builder(
+                itemCount: posts == null ? 0 : posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: <Widget>[
+                      Card(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            Card(
-                              margin: EdgeInsets.all(20.0),
+//                            FadeInImage.memoryNetwork(
+//                              placeholder: kTransparentImage,
+//                              image: posts[index]["featured_media"] == 0
+//                                  ? '' // post doesn't have image
+//                                  : posts[index]["_embedded"]
+//                                      ["wp:featuredmedia"][0]["source_url"],
+//                            ),
+                            Padding(
+                              padding: EdgeInsets.all(10.0),
                               child: ListTile(
-                                title: Text(posts[index]["title"]["rendered"]
-                                    .replaceAll(new RegExp(r'<[^>]*>'), '')),
+                                title: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0),
+                                    child: Text(posts[index]["title"]
+                                            ["rendered"]
+                                        .replaceAll(RegExp(r'<[^>]*>'), ''))),
                                 subtitle: Text(posts[index]["date"]),
-                                onTap: () {
-                                  //this.launchURL(posts[index]["link"]);
-                                },
                               ),
-                            )
+                            ),
+                            new ButtonTheme.bar(
+                              child: new ButtonBar(
+                                children: <Widget>[
+                                  new FlatButton(
+                                    child: const Text('READ MORE'),
+                                    onPressed: () { Navigator.push(
+                                      context, new MaterialPageRoute(
+                                      builder: (context) => new Posts(post: posts[index]),
+                                    ),
+                                    );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    );
-                  },
-                )),
+                      )
+                    ],
+                  );
+                },
+              ),
+      ),
     );
   }
 }
