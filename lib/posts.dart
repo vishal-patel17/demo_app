@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_html_view/flutter_html_view.dart';
 
 class Posts extends StatelessWidget {
   var post;
@@ -21,8 +22,7 @@ class Posts extends StatelessWidget {
                   ? ''
                   : post["_embedded"]["wp:featuredmedia"][0]["source_url"],
             ),
-            new Text(post['content']['rendered']
-                .replaceAll(new RegExp(r'<[^>]*>'), ''))
+            HtmlView(data: post['content']['rendered'])
           ],
         ),
       ),

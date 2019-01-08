@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_html_view/flutter_html_view.dart';
 
 import 'posts.dart';
 
@@ -83,13 +84,13 @@ class _MyAppState extends State<MyApp> {
                       Card(
                         child: Column(
                           children: <Widget>[
-//                            FadeInImage.memoryNetwork(
-//                              placeholder: kTransparentImage,
-//                              image: posts[index]["featured_media"] == 0
-//                                  ? '' // post doesn't have image
-//                                  : posts[index]["_embedded"]
-//                                      ["wp:featuredmedia"][0]["source_url"],
-//                            ),
+                            FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image: posts[index]["featured_media"] == 0
+                                  ? '' // post doesn't have image
+                                  : posts[index]["_embedded"]
+                                      ["wp:featuredmedia"][0]["source_url"],
+                            ),
                             Padding(
                               padding: EdgeInsets.all(10.0),
                               child: ListTile(
@@ -99,7 +100,8 @@ class _MyAppState extends State<MyApp> {
                                     child: Text(posts[index]["title"]
                                             ["rendered"]
                                         .replaceAll(RegExp(r'<[^>]*>'), ''))),
-                                subtitle: Text(posts[index]["date"]),
+                                subtitle: HtmlView(
+                                    data: posts[index]['excerpt']['rendered']),
                               ),
                             ),
                             new ButtonTheme.bar(
@@ -107,11 +109,14 @@ class _MyAppState extends State<MyApp> {
                                 children: <Widget>[
                                   new FlatButton(
                                     child: const Text('READ MORE'),
-                                    onPressed: () { Navigator.push(
-                                      context, new MaterialPageRoute(
-                                      builder: (context) => new Posts(post: posts[index]),
-                                    ),
-                                    );
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                          builder: (context) =>
+                                              new Posts(post: posts[index]),
+                                        ),
+                                      );
                                     },
                                   ),
                                 ],
