@@ -29,6 +29,7 @@ class _PostsState extends State<Posts> {
               placeholder: new CircularProgressIndicator(),
               errorWidget: new Icon(Icons.error),
             ),
+            SizedBox(height: 8.0),
             HtmlView(data: widget.post['content']['rendered']),
             SizedBox(height: 8.0),
             ButtonTheme.bar(
