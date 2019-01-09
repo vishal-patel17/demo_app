@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'posts.dart';
+import 'category_posts.dart';
 
 void main() => runApp(MyApp());
 
@@ -90,150 +91,208 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          //backgroundColor: new Color(0xFF333366),
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.pink),
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            //title: Text('Demo_app'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {},
-              )
-            ],
-          ),
-          drawer: Drawer(),
-          body: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'LATEST BLOG POSTS',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            color: Colors.blue,
-                            letterSpacing: 4.0),
-                      ),
+        //backgroundColor: new Color(0xFF333366),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.pink),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          //title: Text('Demo_app'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            )
+          ],
+        ),
+        drawer: Drawer(
+            child: new ListView(
+          children: <Widget>[
+            new DrawerHeader(
+              child: Center(
+                  child: Text(
+                "Categories",
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              )),
+              //decoration: BoxDecoration(color: Colors.blue),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.home,
+                      color: Colors.black,
+                      size: 25.0,
                     ),
-                    SizedBox(height: 10.0),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: posts == null ? 0 : posts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return posts[index]['categories'][0] == 6
-                            ? Column(
+                    title: Text('HOME', style: TextStyle(fontSize: 15.0)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => new HomePage(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                      leading: Icon(
+                        Icons.category,
+                        color: Colors.black,
+                        size: 25.0,
+                      ),
+                      title: Text(
+                        "Yoga for digestion",
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                      trailing: Icon(
+                        Icons.navigate_next,
+                        color: Colors.blueAccent,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => new CategoryPosts(
+                                  post: this.posts,
+                                ),
+                          ),
+                        );
+                      }),
+                  ListTile(
+                    leading: Icon(
+                      Icons.category,
+                      color: Colors.black,
+                      size: 25.0,
+                    ),
+                    title: new Text("Yoga for back pain",
+                        style: TextStyle(fontSize: 15.0)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => new CategoryPosts(
+                                post: this.posts,
+                              ),
+                        ),
+                      );
+                    },
+                    trailing: Icon(
+                      Icons.navigate_next,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                shrinkWrap: true,
+                itemCount: posts == null ? 0 : posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return posts[index]['categories'][0] == 6
+                      ? Column(
+                          children: <Widget>[
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 24.0,
+                              ),
+                              child: Stack(
                                 children: <Widget>[
                                   Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 16.0,
-                                      horizontal: 24.0,
-                                    ),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Container(
-                                          height: 124.0,
-                                          margin:
-                                              new EdgeInsets.only(left: 46.0),
-                                          decoration: new BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.rectangle,
-                                            borderRadius:
-                                                new BorderRadius.circular(8.0),
-                                            boxShadow: <BoxShadow>[
-                                              new BoxShadow(
-                                                color: Colors.black12,
-                                                blurRadius: 10.0,
-                                                offset: new Offset(0.0, 10.0),
-                                              ),
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 50.0, top: 10.0),
-                                            child: ListTile(
-                                              title: Text(
-                                                  posts[index]["title"]
-                                                      ["rendered"],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 18.0)),
-                                              subtitle: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 8.0),
-                                                child: Text(
-                                                  posts[index]['excerpt']
-                                                          ['rendered']
-                                                      .replaceAll(
-                                                          RegExp(r'<[^>]*>'),
-                                                          ''),
-                                                  style: TextStyle(),
-                                                ),
-                                              ),
-                                              trailing: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 28.0),
-                                                child: IconButton(
-                                                    icon: Icon(
-                                                      Icons.navigate_next,
-                                                      color: Colors.blueAccent,
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              new Posts(
-                                                                  post: posts[
-                                                                      index]),
-                                                        ),
-                                                      );
-                                                    }),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          margin: new EdgeInsets.symmetric(
-                                              vertical: 16.0),
-                                          alignment:
-                                              FractionalOffset.centerLeft,
-                                          child: CachedNetworkImage(
-                                            fit: BoxFit.fill,
-                                            height: 92.0,
-                                            width: 98.0,
-                                            imageUrl: posts[index]
-                                                        ["featured_media"] ==
-                                                    0
-                                                ? '' // post doesn't have image
-                                                : posts[index]["_embedded"]
-                                                        ["wp:featuredmedia"][0]
-                                                    ["source_url"],
-                                            placeholder:
-                                                CircularProgressIndicator(),
-                                            errorWidget: Icon(Icons.error),
-                                          ),
+                                    height: 124.0,
+                                    margin: new EdgeInsets.only(left: 46.0),
+                                    decoration: new BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:
+                                          new BorderRadius.circular(8.0),
+                                      boxShadow: <BoxShadow>[
+                                        new BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 10.0,
+                                          offset: new Offset(0.0, 10.0),
                                         ),
                                       ],
                                     ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 50.0, top: 10.0),
+                                      child: ListTile(
+                                        title: Text(
+                                            posts[index]["title"]["rendered"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18.0)),
+                                        subtitle: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                          child: Text(
+                                            posts[index]['excerpt']['rendered']
+                                                .replaceAll(
+                                                    RegExp(r'<[^>]*>'), ''),
+                                            style: TextStyle(),
+                                          ),
+                                        ),
+                                        trailing: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 28.0),
+                                          child: IconButton(
+                                              icon: Icon(
+                                                Icons.navigate_next,
+                                                color: Colors.blueAccent,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        new Posts(
+                                                            post: posts[index]),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    margin: new EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    alignment: FractionalOffset.centerLeft,
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.fill,
+                                      height: 92.0,
+                                      width: 98.0,
+                                      imageUrl:
+                                          posts[index]["featured_media"] == 0
+                                              ? '' // post doesn't have image
+                                              : posts[index]["_embedded"]
+                                                      ["wp:featuredmedia"][0]
+                                                  ["source_url"],
+                                      placeholder: CircularProgressIndicator(),
+                                      errorWidget: Icon(Icons.error),
+                                    ),
                                   ),
                                 ],
-                              )
-                            : null;
-                      },
-                    ),
-                  ],
-                )),
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox();
+                },
+              ),
+      ),
     );
   }
 }
