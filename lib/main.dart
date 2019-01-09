@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                       leading: Icon(
                         Icons.home,
-                        color: Colors.black,
+                        color: Colors.pink,
                         size: 25.0,
                       ),
                       title: Text('HOME', style: TextStyle(fontSize: 15.0)),
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                         leading: Icon(
                           Icons.category,
-                          color: Colors.black,
+                          color: Colors.pink,
                           size: 25.0,
                         ),
                         title: Text(
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                     ListTile(
                       leading: Icon(
                         Icons.category,
-                        color: Colors.black,
+                        color: Colors.pink,
                         size: 25.0,
                       ),
                       title: new Text("Yoga for back pain",
