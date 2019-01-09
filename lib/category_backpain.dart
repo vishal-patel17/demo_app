@@ -4,16 +4,16 @@ import 'package:collection/collection.dart';
 
 import './posts.dart';
 import './main.dart';
-import './category_backpain.dart';
+import './category_posts.dart';
 
-class CategoryPosts extends StatefulWidget {
+class CategoryBackPain extends StatefulWidget {
   var post;
-  CategoryPosts({Key key, @required var this.post}) : super(key: key);
+  CategoryBackPain({Key key, @required var this.post}) : super(key: key);
   @override
-  _CategoryPostsState createState() => _CategoryPostsState();
+  _CategoryBackPainState createState() => _CategoryBackPainState();
 }
 
-class _CategoryPostsState extends State<CategoryPosts> {
+class _CategoryBackPainState extends State<CategoryBackPain> {
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _CategoryPostsState extends State<CategoryPosts> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => CategoryPosts(
+        builder: (context) => CategoryBackPain(
               post: widget.post,
             ),
       ),
@@ -40,7 +40,7 @@ class _CategoryPostsState extends State<CategoryPosts> {
   List<int> arr;
   void getCategoryCode() {
     setState(() {
-      this.arr = [6, 7];
+      this.arr = [6, 8];
     });
   }
 
@@ -153,7 +153,7 @@ class _CategoryPostsState extends State<CategoryPosts> {
               padding: const EdgeInsets.only(
                   top: 8.0, bottom: 8.0, left: 20.0, right: 8.0),
               child: Text(
-                'YOGA FOR DIGESTION',
+                'YOGA FOR BACK PAIN',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
