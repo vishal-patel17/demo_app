@@ -28,15 +28,9 @@ class PostsSearch extends SearchDelegate<List> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
     final results = this
         ._posts
         .where((a) => a['title']['rendered'].toLowerCase().contains(query));
-    //print(results.toList());
 
     return query.isEmpty
         ? Center(
@@ -63,7 +57,41 @@ class PostsSearch extends SearchDelegate<List> {
                 color: Colors.pink,
               ),
               BuildPostList(results.toList()),
-//                    buildList(context),
+            ],
+          );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final results = this
+        ._posts
+        .where((a) => a['title']['rendered'].toLowerCase().contains(query));
+
+    return query.isEmpty
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 8.0, left: 20.0, right: 8.0),
+                child: Text(
+                  'Search Results',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      color: Colors.blue,
+                      letterSpacing: 3.5),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 20.0, right: 300.0),
+                height: 1.5,
+                color: Colors.pink,
+              ),
+              BuildPostList(results.toList()),
             ],
           );
   }
