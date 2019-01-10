@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import './posts.dart';
 import './main.dart';
 import './category_backpain.dart';
+import './posts_search.dart';
 
 class CategoryPosts extends StatefulWidget {
   var post;
@@ -54,7 +55,9 @@ class _CategoryPostsState extends State<CategoryPosts> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              showSearch(context: context, delegate: PostsSearch(widget.post));
+            },
           )
         ],
       ),
