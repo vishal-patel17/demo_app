@@ -23,7 +23,7 @@ class BuildCommentList extends StatelessWidget {
                       title: HtmlView(
                           data: comments[index]['content']['rendered']),
                       subtitle: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
                             "${DateFormat.yMMMd().format(DateTime.parse(comments[index]['date'].substring(0, 10) + comments[index]['date'].substring(10)))}"),
                       ),
