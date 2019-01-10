@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import './build_comment_list.dart';
+
 class Posts extends StatefulWidget {
   var post;
-  Posts({Key key, @required var this.post}) : super(key: key);
+  var comments;
+  Posts({Key key, @required var this.post, this.comments}) : super(key: key);
   @override
   _PostsState createState() => _PostsState();
 }
@@ -31,6 +34,18 @@ class _PostsState extends State<Posts> {
             SizedBox(height: 8.0),
             HtmlView(data: widget.post['content']['rendered']),
             SizedBox(height: 8.0),
+            Text('Comments',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.pink,
+                    fontSize: 20.0)),
+            Container(
+              margin: EdgeInsets.only(left: 5.0, right: 320.0, top: 5.0),
+              height: 1.5,
+              color: Colors.pink,
+            ),
+            SizedBox(height: 10.0),
+            BuildCommentList(widget.post['id'], widget.comments),
             ButtonTheme.bar(
               child: new ButtonBar(
                 children: <Widget>[

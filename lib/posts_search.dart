@@ -4,7 +4,8 @@ import './build_post_list.dart';
 
 class PostsSearch extends SearchDelegate<List> {
   List _posts = new List();
-  PostsSearch(this._posts);
+  List _comments = new List();
+  PostsSearch(this._posts, this._comments);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -56,7 +57,7 @@ class PostsSearch extends SearchDelegate<List> {
                 height: 1.5,
                 color: Colors.pink,
               ),
-              BuildPostList(results.toList()),
+              BuildPostList(results.toList(), this._comments),
             ],
           );
   }
@@ -91,7 +92,7 @@ class PostsSearch extends SearchDelegate<List> {
                 height: 1.5,
                 color: Colors.pink,
               ),
-              BuildPostList(results.toList()),
+              BuildPostList(results.toList(), this._comments),
             ],
           );
   }

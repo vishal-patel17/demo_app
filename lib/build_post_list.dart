@@ -5,7 +5,8 @@ import './posts.dart';
 
 class BuildPostList extends StatelessWidget {
   List _post = new List();
-  BuildPostList(this._post);
+  List _comments = new List();
+  BuildPostList(this._post, this._comments);
 
   @override
   Widget build(BuildContext context) {
@@ -53,26 +54,37 @@ class BuildPostList extends StatelessWidget {
                                     child: Text(
                                       _post[index]['excerpt']['rendered']
                                           .replaceAll(RegExp(r'<[^>]*>'), ''),
-                                      style: TextStyle(),
+                                      style: TextStyle(color: Colors.black54),
+                                      textAlign: TextAlign.start,
                                     ),
                                   ),
                                   trailing: Padding(
-                                    padding: const EdgeInsets.only(top: 28.0),
-                                    child: IconButton(
-                                        icon: Icon(
-                                          Icons.navigate_next,
-                                          color: Colors.blueAccent,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  new Posts(post: _post[index]),
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        IconButton(
+                                            icon: Icon(
+                                              Icons.navigate_next,
+                                              color: Colors.blueAccent,
                                             ),
-                                          );
-                                        }),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      new Posts(
+                                                        post: _post[index],
+                                                        comments:
+                                                            this._comments,
+                                                      ),
+                                                ),
+                                              );
+                                            }),
+                                      ],
+                                    ),
                                   ),
+                                  isThreeLine: true,
                                 ),
                               ),
                             ),

@@ -9,7 +9,9 @@ import './posts_search.dart';
 
 class CategoryBackPain extends StatefulWidget {
   var post;
-  CategoryBackPain({Key key, @required var this.post}) : super(key: key);
+  var comments;
+  CategoryBackPain({Key key, @required var this.post, this.comments})
+      : super(key: key);
   @override
   _CategoryBackPainState createState() => _CategoryBackPainState();
 }
@@ -56,7 +58,9 @@ class _CategoryBackPainState extends State<CategoryBackPain> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: PostsSearch(widget.post));
+              showSearch(
+                  context: context,
+                  delegate: PostsSearch(widget.post, widget.comments));
             },
           )
         ],

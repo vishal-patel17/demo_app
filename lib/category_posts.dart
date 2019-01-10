@@ -9,7 +9,9 @@ import './posts_search.dart';
 
 class CategoryPosts extends StatefulWidget {
   var post;
-  CategoryPosts({Key key, @required var this.post}) : super(key: key);
+  var comments;
+  CategoryPosts({Key key, @required var this.post, this.comments})
+      : super(key: key);
   @override
   _CategoryPostsState createState() => _CategoryPostsState();
 }
@@ -56,7 +58,9 @@ class _CategoryPostsState extends State<CategoryPosts> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              showSearch(context: context, delegate: PostsSearch(widget.post));
+              showSearch(
+                  context: context,
+                  delegate: PostsSearch(widget.post, widget.comments));
             },
           )
         ],
