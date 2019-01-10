@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:share/share.dart';
 
 import './build_comment_list.dart';
 
@@ -50,17 +51,15 @@ class _PostsState extends State<Posts> {
               child: new ButtonBar(
                 children: <Widget>[
                   IconButton(
-                      icon: Icon(Icons.favorite_border),
-                      color: Colors.pink,
-                      onPressed: () {}),
-                  IconButton(
                       icon: Icon(Icons.comment),
                       color: Colors.pink,
                       onPressed: () {}),
                   IconButton(
                       icon: Icon(Icons.share),
                       color: Colors.pink,
-                      onPressed: () {}),
+                      onPressed: () {
+                        Share.share(widget.post['link']);
+                      }),
                 ],
               ),
             ),
