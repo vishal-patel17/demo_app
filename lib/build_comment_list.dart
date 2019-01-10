@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:intl/intl.dart';
 
 class BuildCommentList extends StatelessWidget {
   var postID;
@@ -22,7 +24,13 @@ class BuildCommentList extends StatelessWidget {
                           data: comments[index]['content']['rendered']),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(comments[index]['date']),
+                        child: Text(
+                            "${DateFormat.yMMMd().format(DateTime.parse(comments[index]['date'].substring(0, 10) + comments[index]['date'].substring(10)))}"),
+                      ),
+                      leading: CachedNetworkImage(
+                        imageUrl: comments[index]['author_avatar_urls']['48'],
+                        placeholder: CircularProgressIndicator(),
+                        errorWidget: Icon(Icons.error),
                       ),
                     ),
                   ),
