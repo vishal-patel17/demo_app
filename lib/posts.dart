@@ -23,7 +23,6 @@ class _PostsState extends State<Posts> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //getComments();
   }
 
   bool _isLoading = false;
@@ -68,7 +67,12 @@ class _PostsState extends State<Posts> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.post['title']['rendered']),
+        iconTheme: IconThemeData(color: Colors.pink),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        actions: <Widget>[
+          PopupMenuButton(itemBuilder: (BuildContext context) {}),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: refreshPage,
@@ -77,9 +81,26 @@ class _PostsState extends State<Posts> {
                 child: CircularProgressIndicator(),
               )
             : Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.only(left: 16.0, bottom: 16.0, right: 16.0),
                 child: ListView(
                   children: <Widget>[
+                    Text(
+                      widget.post['title']['rendered'],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.blue,
+                          letterSpacing: 3.5),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 4.0, right: 330.0),
+                      height: 1.5,
+                      color: Colors.pink,
+                    ),
+                    SizedBox(height: 15.0),
                     CachedNetworkImage(
                       imageUrl: widget.post["featured_media"] == 0
                           ? ''

@@ -24,7 +24,7 @@ class BuildCommentList extends StatelessWidget {
                           data: comments[index]['content']['rendered']),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text("by ${comments[index]['author_name']}"),
+                        child: Text("- ${comments[index]['author_name']}"),
                       ),
                       leading: CachedNetworkImage(
                         imageUrl: comments[index]['author_avatar_urls']['48'],
