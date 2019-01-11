@@ -11,7 +11,10 @@ class PostsSearch extends SearchDelegate<List> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-          icon: Icon(Icons.clear),
+          icon: Icon(
+            Icons.clear,
+            color: Colors.pink,
+          ),
           onPressed: () {
             query = '';
           })
@@ -21,7 +24,10 @@ class PostsSearch extends SearchDelegate<List> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.pink,
+        ),
         onPressed: () {
           close(context, null);
         });
@@ -33,9 +39,9 @@ class PostsSearch extends SearchDelegate<List> {
         ._posts
         .where((a) => a['title']['rendered'].toLowerCase().contains(query));
 
-    return query.isEmpty
+    return query.isEmpty || results.isEmpty
         ? Center(
-            child: CircularProgressIndicator(),
+            child: Text('Nothing found!', style: TextStyle(fontSize: 20.0)),
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +76,10 @@ class PostsSearch extends SearchDelegate<List> {
 
     return query.isEmpty
         ? Center(
-            child: CircularProgressIndicator(),
+            child: Text(
+              'Start typing to search!',
+              style: TextStyle(fontSize: 20.0),
+            ),
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
