@@ -17,6 +17,9 @@ class PostsSearch extends SearchDelegate<List> {
           ),
           onPressed: () {
             query = '';
+            Center(
+              child: Text('Nothing found!', style: TextStyle(fontSize: 20.0)),
+            );
           })
     ];
   }
