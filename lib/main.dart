@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    this.getPosts();
+    this.getPostsAndComments();
   }
 
   bool _isLoading = false;
@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
   List posts;
   List comments;
 
-  // Function to fetch list of posts
-  Future<String> getPosts() async {
+  Future<String> getPostsAndComments() async {
     setState(() {
       this._isLoading = true;
     });
@@ -53,7 +52,6 @@ class _HomePageState extends State<HomePage> {
     var resComments = await http.get(Uri.encodeFull(apiUrl + "comments?_embed"),
         headers: {"Accept": "application/json"});
 
-    // fill our posts list with results and update state
     setState(() {
       var resBody = json.decode(res.body);
       posts = resBody;
@@ -63,8 +61,6 @@ class _HomePageState extends State<HomePage> {
 
       this._isLoading = false;
     });
-
-    //print(posts);
 
     return "Success!";
   }
@@ -80,13 +76,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<Null> refreshPage() async {
     await Future.delayed(Duration(seconds: 1));
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomePage(),
-      ),
-    );
+    getPostsAndComments();
 
     return null;
   }
@@ -229,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20.0, right: 300.0),
+                      margin: EdgeInsets.only(left: 20.0, right: 330.0),
                       height: 1.5,
                       color: Colors.pink,
                     ),

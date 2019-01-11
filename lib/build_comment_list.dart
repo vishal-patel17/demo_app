@@ -23,14 +23,18 @@ class BuildCommentList extends StatelessWidget {
                       title: HtmlView(
                           data: comments[index]['content']['rendered']),
                       subtitle: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                            "${DateFormat.yMMMd().format(DateTime.parse(comments[index]['date'].substring(0, 10) + comments[index]['date'].substring(10)))}"),
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Text("by ${comments[index]['author_name']}"),
                       ),
                       leading: CachedNetworkImage(
                         imageUrl: comments[index]['author_avatar_urls']['48'],
                         placeholder: CircularProgressIndicator(),
                         errorWidget: Icon(Icons.error),
+                      ),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                            "${DateFormat.yMMMd().format(DateTime.parse(comments[index]['date'].substring(0, 10) + comments[index]['date'].substring(10)))}"),
                       ),
                     ),
                   ),
