@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import './build_comment_list.dart';
-import './main.dart';
-import 'main.dart';
 
 class Posts extends StatefulWidget {
   var post;
@@ -100,17 +98,9 @@ class _PostsState extends State<Posts> {
                       height: 1.5,
                       color: Colors.pink,
                     ),
-                    SizedBox(height: 15.0),
-                    CachedNetworkImage(
-                      imageUrl: widget.post["featured_media"] == 0
-                          ? ''
-                          : widget.post["_embedded"]["wp:featuredmedia"][0]
-                              ["source_url"],
-                      placeholder: CircularProgressIndicator(),
-                      errorWidget: Icon(Icons.error),
-                    ),
                     SizedBox(height: 8.0),
-                    HtmlView(data: widget.post['content']['rendered']),
+                    Html(data: widget.post['content']['rendered']),
+//                    HtmlView(data: widget.post['content']['rendered']),
                     SizedBox(height: 8.0),
                     Text('Comments',
                         style: TextStyle(

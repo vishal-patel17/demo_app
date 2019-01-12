@@ -51,6 +51,10 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         this._isConnected = false;
       });
+    } else {
+      setState(() {
+        this._isConnected = false;
+      });
     }
   }
 
@@ -82,9 +86,6 @@ class _HomePageState extends State<HomePage> {
       return "Success!";
     } else {
       this._isLoading = false;
-      //throw Exception('Failed to load post');
-//      Text('Offline!');
-      Container();
       return "Failure";
     }
   }
