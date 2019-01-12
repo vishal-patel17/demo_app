@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:async';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import './build_comment_list.dart';
 
@@ -71,17 +73,36 @@ class _PostsState extends State<Posts> {
           PopupMenuButton(
               itemBuilder: (_) => <PopupMenuItem<String>>[
                     new PopupMenuItem<String>(
-                        child: const Text('Option 1 '), value: 'Option 1'),
-                    new PopupMenuItem<String>(
-                        child: const Text('Option 2'), value: 'Option 2'),
+                        child: const Text('View in website'),
+                        value: 'Option 1'),
+//                    new PopupMenuItem<String>(
+//                        child: const Text('Option 2'), value: 'Option 2'),
                   ],
               onSelected: (value) {
                 if (value == 'Option 1') {
-                  print('Create PDF');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => new WebviewScaffold(
+                            appBar: AppBar(
+                              backgroundColor: Colors.transparent,
+                              elevation: 0.0,
+                              iconTheme: IconThemeData(color: Colors.pink),
+                            ),
+                            url: widget.post['link'],
+                            //withZoom: true,
+                            //hidden: true,
+                            initialChild: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                    ),
+                  );
+//                  launchURL(widget.post['link']);
                 }
-                if (value == 'Option 2') {
-                  print('Option 2');
-                }
+//                if (value == 'Option 2') {
+//                  print('Option 2');
+//                }
               }),
         ],
       ),
@@ -139,7 +160,26 @@ class _PostsState extends State<Posts> {
                               icon: Icon(Icons.comment),
                               color: Colors.pink,
                               onPressed: () {
-                                launchURL(widget.post['link'] + '#comment');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => new WebviewScaffold(
+                                          appBar: AppBar(
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 0.0,
+                                            iconTheme: IconThemeData(
+                                                color: Colors.pink),
+                                          ),
+                                          url: widget.post['link'] + '#comment',
+                                          //withZoom: true,
+                                          //hidden: true,
+                                          initialChild: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        ),
+                                  ),
+                                );
+//                                launchURL(widget.post['link'] + '#comment');
                               }),
                           IconButton(
                               icon: Icon(Icons.share),
