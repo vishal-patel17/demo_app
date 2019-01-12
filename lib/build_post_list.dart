@@ -85,6 +85,17 @@ class BuildPostList extends StatelessWidget {
                                     ),
                                   ),
                                   isThreeLine: true,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => new Posts(
+                                              post: _post[index],
+                                              comments: this._comments,
+                                            ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),

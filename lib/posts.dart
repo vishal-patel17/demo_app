@@ -69,7 +69,14 @@ class _PostsState extends State<Posts> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: <Widget>[
-          PopupMenuButton(itemBuilder: (BuildContext context) {}),
+          PopupMenuButton(
+              itemBuilder: (_) => <PopupMenuItem<String>>[
+                    new PopupMenuItem<String>(
+                        child: const Text('Option 1'), value: 'Option 1'),
+                    new PopupMenuItem<String>(
+                        child: const Text('Option 2'), value: 'Option 2'),
+                  ],
+              onSelected: (_) {}),
         ],
       ),
       body: RefreshIndicator(
