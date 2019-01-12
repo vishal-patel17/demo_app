@@ -19,7 +19,6 @@ class Posts extends StatefulWidget {
 class _PostsState extends State<Posts> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -72,11 +71,18 @@ class _PostsState extends State<Posts> {
           PopupMenuButton(
               itemBuilder: (_) => <PopupMenuItem<String>>[
                     new PopupMenuItem<String>(
-                        child: const Text('Option 1'), value: 'Option 1'),
+                        child: const Text('Option 1 '), value: 'Option 1'),
                     new PopupMenuItem<String>(
                         child: const Text('Option 2'), value: 'Option 2'),
                   ],
-              onSelected: (_) {}),
+              onSelected: (value) {
+                if (value == 'Option 1') {
+                  print('Create PDF');
+                }
+                if (value == 'Option 2') {
+                  print('Option 2');
+                }
+              }),
         ],
       ),
       body: RefreshIndicator(
