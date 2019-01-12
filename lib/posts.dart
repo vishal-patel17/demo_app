@@ -99,7 +99,7 @@ class _PostsState extends State<Posts> {
                       widget.post['title']['rendered'],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
+                          fontSize: 22.0,
                           color: Colors.blue,
                           letterSpacing: 3.5),
                     ),
@@ -112,7 +112,11 @@ class _PostsState extends State<Posts> {
                       color: Colors.pink,
                     ),
                     SizedBox(height: 8.0),
-                    Html(data: widget.post['content']['rendered']),
+                    Html(
+                      data: widget.post['content']['rendered'],
+                      defaultTextStyle: TextStyle(
+                          fontSize: 15.0, letterSpacing: 1.0, wordSpacing: 2.0),
+                    ),
 //                    HtmlView(data: widget.post['content']['rendered']),
                     SizedBox(height: 8.0),
                     Text('Comments',
